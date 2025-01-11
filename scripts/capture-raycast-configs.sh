@@ -28,7 +28,7 @@ local target_file="${target_dir}/Raycast.rayconfig"
 ensure_dir_exists "${target_dir}"
 
 if [[ "${1}" == 'e' ]]; then
-  [ -f "${target_dir}"/Raycast.rayconfig ] && rm -rfv "${target_dir}"/Raycast.rayconfig
+  is_file "${target_dir}"/Raycast.rayconfig && rm -rfv "${target_dir}"/Raycast.rayconfig
 
   open raycast://extensions/raycast/raycast/export-settings-data
 
@@ -59,39 +59,39 @@ elif [[ "${1}" == 'i' ]]; then
   ! is_file "${target_file}" && error "Couldn't find file: '$(yellow "${target_file}")' for import operation; Aborting!!!"
 
   # TODO: Get this from password manager
-  password=$RAYCAST_SETTINGS_PASSWORD
+  password="${RAYCAST_SETTINGS_PASSWORD}"
 
   open raycast://extensions/raycast/raycast/import-settings-data
 
   osascript <<EOF
     tell application "System Events"
-    key code 36
-    delay 0.3
+      key code 36
+      delay 0.3
 
-    key code 5 using {command down, shift down}
-    delay 0.3
+      key code 5 using {command down, shift down}
+      delay 0.3
 
-    keystroke "${target_dir}/Raycast.rayconfig"
-    delay 0.3
+      keystroke "${target_dir}/Raycast.rayconfig"
+      delay 0.3
 
-    key code 36
-    delay 0.5
+      key code 36
+      delay 0.5
 
-    key code 36
-    delay 0.3
+      key code 36
+      delay 0.3
 
-    keystroke "$password"
-    key code 36
-    delay 0.3
+      keystroke "${password}"
+      key code 36
+      delay 0.3
 
-    key code 36
-    delay 0.3
+      key code 36
+      delay 0.3
 
-    key code 36
-    delay 1
+      key code 36
+      delay 1
 
-    key code 53
-    key code 53
+      key code 53
+      key code 53
   end tell
 EOF
 
